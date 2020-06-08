@@ -49,6 +49,12 @@ else
 GOTO_LAPACK_TARGETS=
 endif
 
+ifeq ($(BUILD_HALF),1)
+GOTO_HALF_TARGETS=shgemm.goto
+else
+GOTO_HALF_TARGETS=
+endif
+
 ifeq ($(OSNAME), WINNT)
 
 goto :: slinpack.goto dlinpack.goto clinpack.goto zlinpack.goto \
@@ -78,17 +84,20 @@ goto :: slinpack.goto dlinpack.goto clinpack.goto zlinpack.goto \
        chemm.goto zhemm.goto \
        cherk.goto zherk.goto \
        cher2k.goto zher2k.goto \
+       cher.goto zher.goto \
+       cher2.goto zher2.goto \
        sgemv.goto dgemv.goto cgemv.goto zgemv.goto \
 	   sspmv.goto dspmv.goto \
        strmv.goto dtrmv.goto ctrmv.goto ztrmv.goto \
        stpmv.goto dtpmv.goto ctpmv.goto ztpmv.goto \
+       stpsv.goto dtpsv.goto ctpsv.goto ztpsv.goto \
        strsv.goto dtrsv.goto ctrsv.goto ztrsv.goto \
        sgeev.goto dgeev.goto cgeev.goto zgeev.goto \
        sgesv.goto dgesv.goto cgesv.goto zgesv.goto \
        sgetri.goto dgetri.goto cgetri.goto zgetri.goto \
        spotrf.goto dpotrf.goto cpotrf.goto zpotrf.goto \
        ssymm.goto dsymm.goto csymm.goto zsymm.goto \
-       saxpby.goto daxpby.goto caxpby.goto zaxpby.goto
+       saxpby.goto daxpby.goto caxpby.goto zaxpby.goto $(GOTO_HALF_TARGETS)
 
 acml :: slinpack.acml dlinpack.acml clinpack.acml zlinpack.acml \
        scholesky.acml dcholesky.acml ccholesky.acml zcholesky.acml \
@@ -117,9 +126,12 @@ acml :: slinpack.acml dlinpack.acml clinpack.acml zlinpack.acml \
        chemm.acml zhemm.acml \
        cherk.acml zherk.acml \
        cher2k.acml zher2k.acml \
+       cher.acml zher.acml \
+       cher2.acml zher2.acml \
        sgemv.acml dgemv.acml cgemv.acml zgemv.acml \
        strmv.acml dtrmv.acml ctrmv.acml ztrmv.acml \
        stpmv.acml dtpmv.acml ctpmv.acml ztpmv.acml \
+       stpsv.acml dtpsv.acml ctpsv.acml ztpsv.acml \
        strsv.acml dtrsv.acml ctrsv.acml ztrsv.acml \
        sgeev.acml dgeev.acml cgeev.acml zgeev.acml \
        sgesv.acml dgesv.acml cgesv.acml zgesv.acml \
@@ -156,10 +168,13 @@ atlas :: slinpack.atlas dlinpack.atlas clinpack.atlas zlinpack.atlas \
        chemm.atlas zhemm.atlas \
        cherk.atlas zherk.atlas \
        cher2k.atlas zher2k.atlas \
+       cher.atlas zher.atlas \
+       cher2.atlas zher2.atlas \
        sgemv.atlas dgemv.atlas cgemv.atlas zgemv.atlas \
 	   sspmv.atlas dspmv.atlas \
        strmv.atlas dtrmv.atlas ctrmv.atlas ztrmv.atlas \
        stpmv.atlas dtpmv.atlas ctpmv.atlas ztpmv.atlas \
+       stpsv.atlas dtpsv.atlas ctpsv.atlas ztpsv.atlas \
        strsv.atlas dtrsv.atlas ctrsv.atlas ztrsv.atlas \
        sgeev.atlas dgeev.atlas cgeev.atlas zgeev.atlas \
        sgesv.atlas dgesv.atlas cgesv.atlas zgesv.atlas \
@@ -195,9 +210,12 @@ mkl :: slinpack.mkl dlinpack.mkl clinpack.mkl zlinpack.mkl \
        chemm.mkl zhemm.mkl \
        cherk.mkl zherk.mkl \
        cher2k.mkl zher2k.mkl \
+       cher.mkl zher.mkl \
+       cher2.mkl zher2.mkl \
        sgemv.mkl dgemv.mkl cgemv.mkl zgemv.mkl \
        strmv.mkl dtrmv.mkl ctrmv.mkl ztrmv.mkl \
        stpmv.mkl dtpmv.mkl ctpmv.mkl ztpmv.mkl \
+       stpsv.mkl dtpsv.mkl ctpsv.mkl ztpsv.mkl \
        strsv.mkl dtrsv.mkl ctrsv.mkl ztrsv.mkl \
        sgeev.mkl dgeev.mkl cgeev.mkl zgeev.mkl \
        sgesv.mkl dgesv.mkl cgesv.mkl zgesv.mkl \
@@ -233,10 +251,13 @@ goto :: sgemm.goto dgemm.goto cgemm.goto zgemm.goto \
        chemm.goto zhemm.goto \
        cherk.goto zherk.goto \
        cher2k.goto zher2k.goto \
+       cher.goto zher.goto \
+       cher2.goto zher2.goto \
        sgemv.goto dgemv.goto cgemv.goto zgemv.goto \
 	   sspmv.goto dspmv.goto \
        strmv.goto dtrmv.goto ctrmv.goto ztrmv.goto \
        stpmv.goto dtpmv.goto ctpmv.goto ztpmv.goto \
+       stpsv.goto dtpsv.goto ctpsv.goto ztpsv.goto \
        strsv.goto dtrsv.goto ctrsv.goto ztrsv.goto \
        ssymm.goto dsymm.goto csymm.goto zsymm.goto \
        smallscaling \
@@ -249,7 +270,7 @@ goto :: sgemm.goto dgemm.goto cgemm.goto zgemm.goto \
        samin.goto damin.goto camin.goto zamin.goto \
        smin.goto dmin.goto \
        saxpby.goto daxpby.goto caxpby.goto zaxpby.goto \
-       snrm2.goto dnrm2.goto scnrm2.goto dznrm2.goto $(GOTO_LAPACK_TARGETS)
+       snrm2.goto dnrm2.goto scnrm2.goto dznrm2.goto $(GOTO_LAPACK_TARGETS) $(GOTO_HALF_TARGETS)
 
 acml :: slinpack.acml dlinpack.acml clinpack.acml zlinpack.acml \
        scholesky.acml dcholesky.acml ccholesky.acml zcholesky.acml \
@@ -278,9 +299,12 @@ acml :: slinpack.acml dlinpack.acml clinpack.acml zlinpack.acml \
        chemm.acml zhemm.acml \
        cherk.acml zherk.acml \
        cher2k.acml zher2k.acml \
+       cher.acml zher.acml \
+       cher2.acml zher2.acml \
        sgemv.acml dgemv.acml cgemv.acml zgemv.acml \
        strmv.acml dtrmv.acml ctrmv.acml ztrmv.acml \
        stpmv.acml dtpmv.acml ctpmv.acml ztpmv.acml \
+       stpsv.acml dtpsv.acml ctpsv.acml ztpsv.acml \
        strsv.acml dtrsv.acml ctrsv.acml ztrsv.acml \
        sgeev.acml dgeev.acml cgeev.acml zgeev.acml \
        sgesv.acml dgesv.acml cgesv.acml zgesv.acml \
@@ -317,10 +341,13 @@ atlas :: slinpack.atlas dlinpack.atlas clinpack.atlas zlinpack.atlas \
        chemm.atlas zhemm.atlas \
        cherk.atlas zherk.atlas \
        cher2k.atlas zher2k.atlas \
+       cher.atlas zher.atlas \
+       cher2.atlas zher2.atlas \
        sgemv.atlas dgemv.atlas cgemv.atlas zgemv.atlas \
 	   sspmv.atlas dspmv.atlas \
        strmv.atlas dtrmv.atlas ctrmv.atlas ztrmv.atlas \
        stpmv.atlas dtpmv.atlas ctpmv.atlas ztpmv.atlas \
+       stpsv.atlas dtpsv.atlas ctpsv.atlas ztpsv.atlas \
        strsv.atlas dtrsv.atlas ctrsv.atlas ztrsv.atlas \
        sgeev.atlas dgeev.atlas cgeev.atlas zgeev.atlas \
        sgesv.atlas dgesv.atlas cgesv.atlas zgesv.atlas \
@@ -358,9 +385,12 @@ mkl :: slinpack.mkl dlinpack.mkl clinpack.mkl zlinpack.mkl \
        chemm.mkl zhemm.mkl \
        cherk.mkl zherk.mkl \
        cher2k.mkl zher2k.mkl \
+       cher.mkl zher.mkl \
+       cher2.mkl zher2.mkl \
        sgemv.mkl dgemv.mkl cgemv.mkl zgemv.mkl \
        strmv.mkl dtrmv.mkl ctrmv.mkl ztrmv.mkl \
        stpmv.mkl dtpmv.mkl ctpmv.mkl ztpmv.mkl \
+       stpsv.mkl dtpsv.mkl ctpsv.mkl ztpsv.mkl \
        strsv.mkl dtrsv.mkl ctrsv.mkl ztrsv.mkl \
        sgeev.mkl dgeev.mkl cgeev.mkl zgeev.mkl \
        sgesv.mkl dgesv.mkl cgesv.mkl zgesv.mkl \
@@ -407,9 +437,12 @@ veclib :: slinpack.veclib dlinpack.veclib clinpack.veclib zlinpack.veclib \
        chemm.veclib zhemm.veclib \
        cherk.veclib zherk.veclib \
        cher2k.veclib zher2k.veclib \
+       cher.veclib zher.veclib \
+       cher2.veclib zher2.veclib \
        sgemv.veclib dgemv.veclib cgemv.veclib zgemv.veclib \
        strmv.veclib dtrmv.veclib ctrmv.veclib ztrmv.veclib \
        stpmv.veclib dtpmv.veclib ctpmv.veclib ztpmv.veclib \
+       stpsv.veclib dtpsv.veclib ctpsv.veclib ztpsv.veclib \
        strsv.veclib dtrsv.veclib ctrsv.veclib ztrsv.veclib \
        sgeev.veclib dgeev.veclib cgeev.veclib zgeev.veclib \
        sgesv.veclib dgesv.veclib cgesv.veclib zgesv.veclib \
@@ -587,6 +620,11 @@ zcholesky.essl : zcholesky.$(SUFFIX)
 	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBESSL) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
 
 ##################################### Sgemm ####################################################
+ifeq ($(BUILD_HALF),1)
+shgemm.goto : shgemm.$(SUFFIX) ../$(LIBNAME)
+	$(CC) $(CFLAGS) -o $(@F) $^ $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB) -lm
+endif
+
 sgemm.goto : sgemm.$(SUFFIX) ../$(LIBNAME)
 	$(CC) $(CFLAGS) -o $(@F) $^ $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB) -lm
 
@@ -1244,6 +1282,74 @@ zher2k.mkl : zher2k.$(SUFFIX)
 zher2k.veclib : zher2k.$(SUFFIX)
 	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBVECLIB) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
 
+##################################### Cher ####################################################
+
+cher.goto : cher.$(SUFFIX) ../$(LIBNAME)
+	$(CC) $(CFLAGS) -o $(@F) $^ $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB) -lm
+
+cher.acml : cher.$(SUFFIX)
+	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBACML) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
+
+cher.atlas : cher.$(SUFFIX)
+	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBATLAS) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
+
+cher.mkl : cher.$(SUFFIX)
+	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBMKL) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
+
+cher.veclib : cher.$(SUFFIX)
+	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBVECLIB) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
+
+##################################### Zher ####################################################
+
+zher.goto : zher.$(SUFFIX) ../$(LIBNAME)
+	$(CC) $(CFLAGS) -o $(@F) $^ $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB) -lm
+
+zher.acml : zher.$(SUFFIX)
+	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBACML) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
+
+zher.atlas : zher.$(SUFFIX)
+	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBATLAS) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
+
+zher.mkl : zher.$(SUFFIX)
+	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBMKL) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
+
+zher.veclib : zher.$(SUFFIX)
+	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBVECLIB) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
+
+##################################### Cher2 ####################################################
+
+cher2.goto : cher2.$(SUFFIX) ../$(LIBNAME)
+	$(CC) $(CFLAGS) -o $(@F) $^ $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB) -lm
+
+cher2.acml : cher2.$(SUFFIX)
+	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBACML) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
+
+cher2.atlas : cher2.$(SUFFIX)
+	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBATLAS) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
+
+cher2.mkl : cher2.$(SUFFIX)
+	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBMKL) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
+
+cher2.veclib : cher2.$(SUFFIX)
+	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBVECLIB) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
+
+##################################### Zher2 ####################################################
+
+zher2.goto : zher2.$(SUFFIX) ../$(LIBNAME)
+	$(CC) $(CFLAGS) -o $(@F) $^ $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB) -lm
+
+zher2.acml : zher2.$(SUFFIX)
+	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBACML) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
+
+zher2.atlas : zher2.$(SUFFIX)
+	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBATLAS) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
+
+zher2.mkl : zher2.$(SUFFIX)
+	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBMKL) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
+
+zher2.veclib : zher2.$(SUFFIX)
+	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBVECLIB) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
+
 ##################################### Sgemv ####################################################
 sgemv.goto : sgemv.$(SUFFIX) ../$(LIBNAME)
 	$(CC) $(CFLAGS) -o $(@F) $^ $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB) -lm
@@ -1456,6 +1562,73 @@ ztpmv.mkl : ztpmv.$(SUFFIX)
 
 ztpmv.veclib : ztpmv.$(SUFFIX)
 	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBVECLIB) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
+
+##################################### Stpsv ####################################################
+stpsv.goto : stpsv.$(SUFFIX) ../$(LIBNAME)
+	$(CC) $(CFLAGS) -o $(@F) $^ $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB) -lm
+
+stpsv.acml : stpsv.$(SUFFIX)
+	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBACML) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
+
+stpsv.atlas : stpsv.$(SUFFIX)
+	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBATLAS) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
+
+stpsv.mkl : stpsv.$(SUFFIX)
+	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBMKL) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
+
+stpsv.veclib : stpsv.$(SUFFIX)
+	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBVECLIB) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
+
+##################################### Dtpsv ####################################################
+dtpsv.goto : dtpsv.$(SUFFIX) ../$(LIBNAME)
+	$(CC) $(CFLAGS) -o $(@F) $^ $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB) -lm
+
+dtpsv.acml : dtpsv.$(SUFFIX)
+	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBACML) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
+
+dtpsv.atlas : dtpsv.$(SUFFIX)
+	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBATLAS) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
+
+dtpsv.mkl : dtpsv.$(SUFFIX)
+	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBMKL) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
+
+dtpsv.veclib : dtpsv.$(SUFFIX)
+	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBVECLIB) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
+
+##################################### Ctpsv ####################################################
+
+ctpsv.goto : ctpsv.$(SUFFIX) ../$(LIBNAME)
+	$(CC) $(CFLAGS) -o $(@F) $^ $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB) -lm
+
+ctpsv.acml : ctpsv.$(SUFFIX)
+	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBACML) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
+
+ctpsv.atlas : ctpsv.$(SUFFIX)
+	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBATLAS) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
+
+ctpsv.mkl : ctpsv.$(SUFFIX)
+	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBMKL) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
+
+ctpsv.veclib : ctpsv.$(SUFFIX)
+	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBVECLIB) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
+
+##################################### Ztpsv ####################################################
+
+ztpsv.goto : ztpsv.$(SUFFIX) ../$(LIBNAME)
+	$(CC) $(CFLAGS) -o $(@F) $^ $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB) -lm
+
+ztpsv.acml : ztpsv.$(SUFFIX)
+	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBACML) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
+
+ztpsv.atlas : ztpsv.$(SUFFIX)
+	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBATLAS) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
+
+ztpsv.mkl : ztpsv.$(SUFFIX)
+	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBMKL) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
+
+ztpsv.veclib : ztpsv.$(SUFFIX)
+	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBVECLIB) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
+
 ##################################### Strsv ####################################################
 strsv.goto : strsv.$(SUFFIX) ../$(LIBNAME)
 	$(CC) $(CFLAGS) -o $(@F) $^ $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB) -lm
@@ -1652,7 +1825,7 @@ zsymv.veclib : zsymv.$(SUFFIX)
 
 ##################################### Sgeev ####################################################
 sgeev.goto : sgeev.$(SUFFIX) ../$(LIBNAME)
-	$(CC) $(CFLAGS) -o $(@F) $^ $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB) -lm
+	$(FC) $(CFLAGS) -o $(@F) $^ $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB) -lm
 
 sgeev.acml : sgeev.$(SUFFIX)
 	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBACML) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
@@ -1668,7 +1841,7 @@ sgeev.veclib : sgeev.$(SUFFIX)
 
 ##################################### Dgeev ####################################################
 dgeev.goto : dgeev.$(SUFFIX) ../$(LIBNAME)
-	$(CC) $(CFLAGS) -o $(@F) $^ $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB) -lm
+	$(FC) $(CFLAGS) -o $(@F) $^ $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB) -lm
 
 dgeev.acml : dgeev.$(SUFFIX)
 	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBACML) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
@@ -1685,7 +1858,7 @@ dgeev.veclib : dgeev.$(SUFFIX)
 ##################################### Cgeev ####################################################
 
 cgeev.goto : cgeev.$(SUFFIX) ../$(LIBNAME)
-	$(CC) $(CFLAGS) -o $(@F) $^ $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB) -lm
+	$(FC) $(CFLAGS) -o $(@F) $^ $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB) -lm
 
 cgeev.acml : cgeev.$(SUFFIX)
 	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBACML) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
@@ -1702,7 +1875,7 @@ cgeev.veclib : cgeev.$(SUFFIX)
 ##################################### Zgeev ####################################################
 
 zgeev.goto : zgeev.$(SUFFIX) ../$(LIBNAME)
-	$(CC) $(CFLAGS) -o $(@F) $^ $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB) -lm
+	$(FC) $(CFLAGS) -o $(@F) $^ $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB) -lm
 
 zgeev.acml : zgeev.$(SUFFIX)
 	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBACML) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
@@ -1718,7 +1891,7 @@ zgeev.veclib : zgeev.$(SUFFIX)
 
 ##################################### Sgetri ####################################################
 sgetri.goto : sgetri.$(SUFFIX) ../$(LIBNAME)
-	$(CC) $(CFLAGS) -o $(@F) $^ $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB) -lm
+	$(FC) $(CFLAGS) -o $(@F) $^ $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB) -lm
 
 sgetri.acml : sgetri.$(SUFFIX)
 	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBACML) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
@@ -1734,7 +1907,7 @@ sgetri.veclib : sgetri.$(SUFFIX)
 
 ##################################### Dgetri ####################################################
 dgetri.goto : dgetri.$(SUFFIX) ../$(LIBNAME)
-	$(CC) $(CFLAGS) -o $(@F) $^ $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB) -lm
+	$(FC) $(CFLAGS) -o $(@F) $^ $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB) -lm
 
 dgetri.acml : dgetri.$(SUFFIX)
 	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBACML) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
@@ -1751,7 +1924,7 @@ dgetri.veclib : dgetri.$(SUFFIX)
 ##################################### Cgetri ####################################################
 
 cgetri.goto : cgetri.$(SUFFIX) ../$(LIBNAME)
-	$(CC) $(CFLAGS) -o $(@F) $^ $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB) -lm
+	$(FC) $(CFLAGS) -o $(@F) $^ $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB) -lm
 
 cgetri.acml : cgetri.$(SUFFIX)
 	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBACML) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
@@ -1768,7 +1941,7 @@ cgetri.veclib : cgetri.$(SUFFIX)
 ##################################### Zgetri ####################################################
 
 zgetri.goto : zgetri.$(SUFFIX) ../$(LIBNAME)
-	$(CC) $(CFLAGS) -o $(@F) $^ $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB) -lm
+	$(FC) $(CFLAGS) -o $(@F) $^ $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB) -lm
 
 zgetri.acml : zgetri.$(SUFFIX)
 	-$(CC) $(CFLAGS) -o $(@F) $^ $(LIBACML) $(CEXTRALIB) $(EXTRALIB) $(FEXTRALIB)
@@ -2754,6 +2927,11 @@ ccholesky.$(SUFFIX) : cholesky.c
 zcholesky.$(SUFFIX) : cholesky.c
 	$(CC) $(CFLAGS) -c -DCOMPLEX -DDOUBLE -o $(@F) $^
 
+ifeq ($(BUILD_HALF),1)
+shgemm.$(SUFFIX) : gemm.c
+	$(CC) $(CFLAGS) -c -DHALF -UCOMPLEX -UDOUBLE -o $(@F) $^
+endif
+
 sgemm.$(SUFFIX) : gemm.c
 	$(CC) $(CFLAGS) -c -UCOMPLEX -UDOUBLE -o $(@F) $^
 
@@ -2868,6 +3046,18 @@ cher2k.$(SUFFIX) : her2k.c
 zher2k.$(SUFFIX) : her2k.c
 	$(CC) $(CFLAGS) -c -DCOMPLEX -DDOUBLE -o $(@F) $^
 
+cher.$(SUFFIX) : her.c
+	$(CC) $(CFLAGS) -c -DCOMPLEX -UDOUBLE -o $(@F) $^
+
+zher.$(SUFFIX) : her.c
+	$(CC) $(CFLAGS) -c -DCOMPLEX -DDOUBLE -o $(@F) $^
+
+cher2.$(SUFFIX) : her2.c
+	$(CC) $(CFLAGS) -c -DCOMPLEX -UDOUBLE -o $(@F) $^
+
+zher2.$(SUFFIX) : her2.c
+	$(CC) $(CFLAGS) -c -DCOMPLEX -DDOUBLE -o $(@F) $^
+
 sgemv.$(SUFFIX) : gemv.c
 	$(CC) $(CFLAGS) -c -UCOMPLEX -UDOUBLE -o $(@F) $^
 
@@ -2908,6 +3098,18 @@ ctpmv.$(SUFFIX) : tpmv.c
 	$(CC) $(CFLAGS) -c -DCOMPLEX -UDOUBLE -o $(@F) $^
 
 ztpmv.$(SUFFIX) : tpmv.c
+	$(CC) $(CFLAGS) -c -DCOMPLEX -DDOUBLE -o $(@F) $^
+
+stpsv.$(SUFFIX) : tpsv.c
+	$(CC) $(CFLAGS) -c -UCOMPLEX -UDOUBLE -o $(@F) $^
+
+dtpsv.$(SUFFIX) : tpsv.c
+	$(CC) $(CFLAGS) -c -UCOMPLEX -DDOUBLE -o $(@F) $^
+
+ctpsv.$(SUFFIX) : tpsv.c
+	$(CC) $(CFLAGS) -c -DCOMPLEX -UDOUBLE -o $(@F) $^
+
+ztpsv.$(SUFFIX) : tpsv.c
 	$(CC) $(CFLAGS) -c -DCOMPLEX -DDOUBLE -o $(@F) $^
 
 strsv.$(SUFFIX) : trsv.c
